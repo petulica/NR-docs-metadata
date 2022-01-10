@@ -186,9 +186,9 @@
       "minimum": -90,
       "maximum": 90
     },
-    "DataSet": {
-      "id": "#dataset",
-      "title": "OARepoRDM DataSet v3.0.0",
+    "Document": {
+      "id": "#document",
+      "title": "DOPLNIT",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -248,11 +248,11 @@
           "description": "Taxonomy driven typology of objects that's possible to store in the repository",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
-        "dateAvailable": {
-          "description": "The date the resource is made publicly available.",
-          "$comment": "týká se datasetu, nikoliv metadat!!!",
+        "dateIssued": {
+          "description": "The date the resource is published, in case of grey literature made publicly available.",
+          "$comment": "týká se dokumentu, nikoliv metadat!!!",
           "$comment1": "podle něj se bude řídit embargo, takže vyplní se datum, kdy mají být data v repozitáři veřejná (dataset access rights = open access); převzáno z datacite",
-          "$comment2": "publicationYear, který je pro datacite povinný se bude generovat v oai-pmh z tohohle pole",
+          "$comment2": "ve krácené formě se rovná publicationYear v datacite",
           "$comment3": "pokud neni vyplnen uzivatelem, pri vypublikovani se automaticky nastavi na aktualni datum",
           "$ref": "#/definitions/date"
         },
@@ -261,34 +261,6 @@
           "$comment": "týká se datasetu, nikoliv metadat!!!",
           "$comment1": "neukazuje se ve vkládacím formuláři. jen při editaci záznamu!",
           "$ref": "#/definitions/date"
-        },
-        "dateCollected": {
-          "description": "The date or date range in which the resource content was collected. To indicate precise or particular timeframes in which research was conducted.",
-          "$comment": "týká se datasetu, nikoliv metadat!!!",
-          "$ref": "#/definitions/dateOrRange"
-        },
-        "dateCreated": {
-          "description": "The date the resource itself was put together; this could refer to a timeframe in ancient history, a date range, or a single date for a final component, e.g., the finalised file with all the data.",
-          "$comment": "týká se datasetu, nikoliv metadat!!!",
-          "$ref": "#/definitions/dateOrRange"
-        },
-        "dateValidTo": {
-          "description": "The date during which the dataset or resource is accurate.",
-          "$comment": "týká se datasetu, nikoliv metadat!!!",
-          "$ref": "#/definitions/date"
-        },
-        "dateWithdrawn": {
-          "description": "The date the resource is removed + description that indicates the reason for the retraction or withdrawal.",
-          "$comment": "týká se datasetu, nikoliv metadat!!!",
-          "type": "object",
-          "properties": {
-            "dateInformation": {
-              "type": "string"
-            },
-            "date": {
-              "$ref": "#/definitions/dateOrRange"
-            }
-          }
         },
         "keywords": {
           "description": "free-form keywords, often created by author(s)",
@@ -304,8 +276,7 @@
           "minItems": 1
         },
         "subjectCategories": {
-          "description": "konspekt nebo jiné oborové třídění - poslouží jako podklad pro oborové clustery",
-          "$comment": "PETRA TO DO: potřeba něco převzít/vytvořit vlastní taxonomii",
+          "description": "FRASCATI oborové třídění - může sloužit jako podklad pro oborové filtrování",
           "$comment": "Alzp: Name changed to categories",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
           "minItems": 1,
@@ -348,8 +319,7 @@
         },
         "accessRights": {
           "description": "Taxonomy driven list of possible access to the document - open, embargoed, restirected and metadata only access. Based on COAR vocabulary - http://vocabularies.coar-repositories.org/documentation/access_rights/",
-          "$comment": "Pokud není vypublikovaný, tak restricted. Po vypublikování pokud dateAvailable je v budoucnosti, tak embargoed. Jinak Open Access.",
-          "$comment2": "Zvážit, pokud to není syntetické pole",
+          "$comment": "Pokud není vypublikovaný, tak restricted. Po vypublikování pokud dateAvailable je v budoucnosti, tak embargoed. Jinak Open Access. Pokud popisuje fyzický objekt (tištěnou knihu), tak metadata only",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "relatedItems": {
@@ -554,8 +524,9 @@
         "creators",
         "resourceType",
         "accessRights",
-        "abstract",
-        "subjectCategories",
+        "dateIssued",
+        "language",
+        "provider",
         "publisher"
       ]
     }
