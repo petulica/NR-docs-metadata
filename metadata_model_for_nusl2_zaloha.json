@@ -9,6 +9,85 @@
         "$schema": {
           "type": "string"
         },
+        "abstract": {
+          "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
+        },
+        "accessibility": {
+          "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
+        },
+        "accessRights": {
+          "description": "Taxonomy driven list of possible access to the document - open, embargoed, restirected and metadata only access. Based on COAR vocabulary - http://vocabularies.coar-repositories.org/documentation/access_rights/",
+          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
+        },
+        "creator": {
+          "description": "Metadata on primary responsibility on the work - people (authors; preferred in a form Surname, First Name) and organizations. Contains its name and identifier as e.g. ORCID",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "ORCID": {
+                "type": "string"
+              },
+              "scopusID": {
+                "type": "string"
+              },
+              "researcherID": {
+                "description": "WoS",
+                "type": "string"
+              },
+              "czenasAutID": {
+                "type": "string"
+              },
+              "vedidk": {
+                "description": "ID osoby v RIV vytvořené z rodného čísla, ale nelze jej odvodit zpět.",
+                "type": "string"
+              },
+              "institutionalID": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "contributor": {
+          "description": "Metadata on secondary responsibility on the work - people (editors, illustrators, etc.; preferred in a form Surname, First Name) and organizations. Contains its name, identifier as e.g. ORCID, and role (referee, editor, etc.) Roles are driven by a taxonomy.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "ORCID": {
+                "type": "string"
+              },
+              "scopusID": {
+                "type": "string"
+              },
+              "researcherID": {
+                "description": "WoS",
+                "type": "string"
+              },
+              "czenasAutID": {
+                "type": "string"
+              },
+              "vedidk": {
+                "description": "ID osoby v RIV vytvořené z rodného čísla, ale nelze jej odvodit zpět.",
+                "type": "string"
+              },
+              "institutionalID": {
+                "type": "string"
+              },
+              "role": {
+                "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
+              }
+            }
+          }
+        },
         "dateIssued": {
           "description": "datum vydání/zveřejnění. může být YYYY, YYYY-MD nebo YYYY-MM-DD.",
           "$comment": "pokud u VŠKP neexistuje, přebírá se dateDefended",
