@@ -10,3 +10,4 @@ diskuze týmu metadata
 
 nutné změny pro harvest
 * publisher nepovinný?
+* creators a contributors
