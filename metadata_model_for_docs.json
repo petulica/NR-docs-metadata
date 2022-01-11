@@ -79,7 +79,6 @@
       ]
     },
     "organization": {
-      "$comment": "TODO Petra: upravit taxonomii institutions - add nameType organizational + rename pole s názvem institutce na fullName",
       "$comment": "Alzp: Name of the property? Should be object?",
       "anyOf": [
         {

@@ -2,6 +2,7 @@ dotazy call
 * objectPIDs - proč je doi dvakrát?
 * proč má creator required jen fullname ale contributor i afiliaci?
 * subjectCategories - kde to alžběta změnila? proč?
+* contributor role - jen v marshmallow? proč?
 
 
 diskuze týmu metadata
