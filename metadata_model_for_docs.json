@@ -249,16 +249,20 @@
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "dateIssued": {
-          "description": "The date the resource is published, in case of grey literature made publicly available.",
+          "description": "The date the resource is originaly published by publisher, in case of grey literature made publicly available by the institution.",
           "$comment": "týká se dokumentu, nikoliv metadat!!!",
-          "$comment1": "podle něj se bude řídit embargo, takže vyplní se datum, kdy mají být data v repozitáři veřejná (dataset access rights = open access); převzáno z datacite",
-          "$comment2": "ve krácené formě se rovná publicationYear v datacite",
-          "$comment3": "pokud neni vyplnen uzivatelem, pri vypublikovani se automaticky nastavi na aktualni datum",
+          "$comment1": "jiné než dateAvailable pro data, vždy se vyplní ručně. v datacite ve zkrácené formě odpovídá PublicationYear.",
+          "$ref": "#/definitions/date"
+        },
+        "dateAvailable": {
+          "description": "The date the resource is publicly available in a repository.",
+          "$comment": "týká se dokumentu, nikoliv metadat!!!",
+          "$comment1": "stejně jako dateAvailable pro data, budou se přes něj řídit přístupy - embargo",
           "$ref": "#/definitions/date"
         },
         "dateModified": {
           "description": "The date of the last update to the resource, not metadata",
-          "$comment": "týká se datasetu, nikoliv metadat!!!",
+          "$comment": "týká se dokumentu/obsahu, nikoliv metadat!!!",
           "$comment1": "neukazuje se ve vkládacím formuláři. jen při editaci záznamu!",
           "$ref": "#/definitions/date"
         },
@@ -270,8 +274,12 @@
           }
         },
         "publisher": {
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
-          "description": "taxonomie institutions",
+          "description": "volný zápis vydavatele",
+          "$comment": "místo taxonomie, našeptávání hodnot",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
           "uniqueItems": true,
           "minItems": 1
         },
@@ -452,7 +460,7 @@
           "uniqueItems": true
         },
         "version": {
-          "$comment": "hodnota ve formuláři není editovatelná. při uploadu dat nutnost změnit verzi, pokud data ještě nebyla 1.0.0",
+          "$comment": "verze obsahu, nikoliv záznamu. hodnota ve formuláři není editovatelná.",
           "type": "string"
         },
         "geoLocations": {

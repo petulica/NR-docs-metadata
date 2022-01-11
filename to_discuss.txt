@@ -1,12 +1,12 @@
 dotazy call
 * objectPIDs - proč je doi dvakrát?
 * proč má creator required jen fullname ale contributor i afiliaci?
+* subjectCategories - kde to alžběta změnila? proč?
+
 
 diskuze týmu metadata
-* dateIssued - nechat automatické vyplnění při vypublikování záznamu?
-* publisher - změnit na našeptávání hodnot, ale obava, že kluci budou mít problém
-* subjectCategories - kde to alžběta změnila? proč?
-* ponechávat metody a tech. info?
-* verzování?
-* geoLocations?
-* co s polem provider vs publisher
+* co s polem provider
+
+
+nutné změny pro harvest
+* publisher nepovinný?
