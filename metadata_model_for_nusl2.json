@@ -9,19 +9,6 @@
         "$schema": {
           "type": "string"
         },
-        "dateIssued": {
-          "description": "datum vydání/zveřejnění. může být YYYY, YYYY-MD nebo YYYY-MM-DD.",
-          "$comment": "pokud u VŠKP neexistuje, přebírá se dateDefended",
-          "type": "string"
-        },
-        "dateModified": {
-          "description": "datum změny OBSAHU. může být YYYY, YYYY-MD nebo YYYY-MM-DD. Dokument může být několikrát aktualizován, proto opakovatelné",
-          "type": "string"
-        },
-        "resourceType": {
-          "description": "Taxonomy driven typology of documents that's possible to store in the repository. More details on document typology is available from website www.narodnirepozitar.cz",
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
-        },
         "extent": {
           "description": "Extent of the work. If it is not paged, then it takes over number of pages of the entire pdf.",
           "type": "array",
@@ -34,10 +21,7 @@
           "type": "string",
           "format": "URL"
         },
-        "control_number": {
-          "description": "incremental number of the record in Czech National Repository",
-          "type": "string"
-        },
+
         "recordIdentifiers": {
           "description": "systémové identifikátory a trvalé adresy; It contains identifiers collected from other resources as are persistent ID of original record (handle, doi), ID from library catalogue, or identifiers used for data exchange via OAI-PMH.",
           "type": "object",
@@ -73,79 +57,6 @@
             }
           }
         },
-        "workIdentifiers": {
-          "description": "mezinárodní identifikátory díla",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "isbn": {
-              "description": "identikátor monografie",
-              "$comment": "udělat validaci do MM - pokud obsahuje string ISBN, tak odstranit; příklad 'ISBN 978-3-16-148410-0' a to 'ISBN' je potřeba odstranit",
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "issn": {
-              "description": "identikátor časopisu",
-              "$comment": "udělat validaci MM - pokud obsahuje string ISSN, tak odstranit; příklad 1342-3522 a někdy to tam prostě vloží i s tím ISSN",
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "doi": {
-              "$comment": "udělat validaci MM - musí obsahovat 'doi'",
-              "type": "string"
-            },
-            "RIV": {
-              "$comment": "udělat validaci MM - musí obsahovat 'riv'",
-              "type": "string"
-            }
-          }
-        },
-        "isGL": {
-          "description": "označuje, jestli je dokument typově šedá literatura nebo ne; co kdy je a není šedá literatura lze dohledat v Charakteristice hlavních typů dokumentů NR",
-          "$comment": "bude se většinou přiřazovat na základě typu dokumentu. prozatím všechno true",
-          "type": "boolean"
-        },
-        "language": {
-          "description": "ISO 639-2 B language code, i.e. code for a language in English.",
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
-          "minItems": 1
-        },
-        "note": {
-          "description": "Free-form note for any comment that couldn't be inserted in any other field.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "fundingReference": {
-          "description": "informace o přidruženém projektu - identifkátor projektu a název poskytovatele v CZ a EN",
-          "$comment": "na základě prvních dvou znaků v řetězci s identifikátorem projektu lze přiřadit poskytovatele",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "projectID": {
-                "type": "string"
-              },
-              "projectName": {
-                "type": "string"
-              },
-              "fundingProgram": {
-                "type": "string"
-              },
-              "funder": {
-                "$comment": "bude taxonomie, která bude obsahovat název v cz a en (funderName), funderISVaVaICode (3-místné označení poskytovatele, např. MSM pro MŠMT), a možná funderDOI (doi z crossref pro poskytovatele), ale to musím prozkoumat, jestli dohledám pro všechny české",
-                "$comment": "podmíněně povinné - uvedu projekt, musím uvést i poskytovatele",
-                "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
-              }
-            }
-          }
-        },
         "provider": {
           "description": "It takes over metadata on provider from Institutions taxonomy - i.e. name and url.",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
@@ -157,12 +68,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/location"
-          }
-        },
-        "publisher": {
-          "type": "array",
-          "items": {
-            "type": "string"
           }
         },
         "relatedItem": {
@@ -224,11 +129,6 @@
             }
           }
         },
-        "rights": {
-          "description": "It tells details on copyright - if it is fully under copyright act or if it is available under Creative Commons licence and if so under which one.",
-          "$comment": "podmíněně povinné - if ručně vložené bez omezení, then přidělit Dílo chráněno podle aut. zákona v cz a en",
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
-        },
         "series": {
           "description": "edice tématicky sdružující podobné věci",
           "$comment": "našeptávač",
@@ -251,28 +151,6 @@
           "description": "subject headings that describes the work taken over from a vocabulary (taxonomy). Current vocabularies - PSH, MEDVIK, CZMESH.",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
-        "keywords": {
-          "description": "free-form keywords, often created by author(s)",
-          "type": "array",
-          "items": {
-            "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
-          }
-        },
-        "title": {
-          "description": "Title of the work. It is allowed to insert title in multiple languages.",
-          "type": "array",
-          "items": {
-            "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
-          }
-        },
-        "titleAlternate": {
-          "description": "alternate title of the work - subtitle or title of work part. It is allowed to insert title in multiple languages.",
-          "type": "array",
-          "items": {
-            "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
-          }
-        }
-      },
       "required": [
         "accessRights",
         "creator",

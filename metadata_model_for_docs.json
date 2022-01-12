@@ -293,7 +293,8 @@
           "description": "ISO 639-2 B in slug, ISO 639-2 T in alias, ISO 639-1 as Alpha2.",
           "$comment": "Alpha2 se bude exportovat pro datacite",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
-          "uniqueItems": true
+          "uniqueItems": true,
+          "minItems": 1
         },
         "notes": {
           "description": "Free-form note for any comment that couldn't be inserted in any other field.",

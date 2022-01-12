@@ -7,6 +7,10 @@ dotazy call
 
 diskuze týmu metadata
 * co s polem provider
+* může být accessibility užitečná i pro ručně vložené věci?
+* external location stejná otázka
+* extent - možná spíš pak u každého souboru nebo vytažené ze souborů, a zase v případě harvestu?
+* rights -  "podmíněně povinné - if ručně vložené bez omezení, then přidělit Dílo chráněno podle aut. zákona v cz a en" - nechat pro dokumenty?
 
 
 nutné změny pro harvest
