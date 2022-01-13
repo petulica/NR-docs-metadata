@@ -22,41 +22,7 @@
           "format": "URL"
         },
 
-        "recordIdentifiers": {
-          "description": "systémové identifikátory a trvalé adresy; It contains identifiers collected from other resources as are persistent ID of original record (handle, doi), ID from library catalogue, or identifiers used for data exchange via OAI-PMH.",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "nuslOAI": {
-              "description": "oai id převzaté z NUŠL (odpovídá OAI identifikátoru původního záznamu, ale vzhledem k návaznostem vytaženo extra); zatím se novým záznamům vznilkým v NR nepřidělují",
-              "type": "string"
-            },
-            "nrcrHandle": {
-              "description": "PURL NR ve formě HANDLE",
-              "type": "string",
-              "format": "URL"
-            },
-            "nrcrOAI": {
-              "description": "oai id, které nr přiděluje všem svým záznamům a má strukturu nr+handle. zatím by se nemělo přiřazovat, ale až s vytvořením OAI NR ČR ven pro sklízení NR",
-              "type": "string"
-            },
-            "originalRecord": {
-              "description": "odkaz na původní záznam, nejčastěji handle",
-              "$comment": "podmíněně povinné - if harvest",
-              "type": "string",
-              "format": "URL"
-            },
-            "originalRecordOAI": {
-              "description": "id původního záznamu ve formátu oai",
-              "$comment": "podmíněně povinné - if harvest",
-              "type": "string"
-            },
-            "catalogueSysNo": {
-              "description": "pravděpodobně číslo, pro případy importů záznamů naexportovaných z knihovních katalogů ručně hromadně, tj. nejsou získány harvestem",
-              "type": "string"
-            }
-          }
-        },
+        
         "provider": {
           "description": "It takes over metadata on provider from Institutions taxonomy - i.e. name and url.",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
