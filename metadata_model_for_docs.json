@@ -68,7 +68,8 @@
             "affiliation": {
               "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
               "description": "taxonomie institutions",
-              "$comment": "povinná pro pole creator a contributor (autory a přispěvatele popisovaného objektu/datasetu) v marshmallow"
+              "$comment": "povinná pro pole creator a contributor (autory a přispěvatele popisovaného objektu/datasetu) v marshmallow; neplatí pro harvest!",
+              "$oai": "není povinné"
             }
           },
           "required": [
@@ -221,6 +222,7 @@
           "uniqueItems": true
         },
         "creators": {
+          "$OAIcomment": "required pouze fullName, tzn. z marshmallow odstranit/vyjimku na afiliaci.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/authority"
@@ -232,13 +234,13 @@
           "uniqueItems": true
         },
         "contributors": {
+          "$OAIcomment": "required pouze fullName, tzn. z marshmallow odstranit/vyjimku na afiliaci.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/authority"
           },
           "required": [
-            "fullName",
-            "affiliation"
+            "fullName"
           ],
           "uniqueItems": true
         },
@@ -250,7 +252,7 @@
         "dateIssued": {
           "description": "The date the resource is originaly published by publisher, in case of grey literature made publicly available by the institution.",
           "$comment": "týká se dokumentu, nikoliv metadat!!!",
-          "$comment1": "jiné než dateAvailable pro data, vždy se vyplní ručně. v datacite ve zkrácené formě odpovídá PublicationYear.",
+          "$comment1": "jiné než dateAvailable pro data, vždy se vyplní ručně. v datacite ve formě YYYY odpovídá PublicationYear.",
           "$ref": "#/definitions/date"
         },
         "dateAvailable": {
@@ -285,6 +287,7 @@
         "subjectCategories": {
           "description": "FRASCATI oborové třídění - může sloužit jako podklad pro oborové filtrování",
           "$comment": "Alzp: Name changed to categories",
+          "$oai" : "povinnost neplatí pro harvest",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
           "minItems": 1,
           "uniqueItems": true
@@ -305,6 +308,7 @@
           "uniqueItems": true
         },
         "abstract": {
+          "$oai" : "povinnost v marshmallow neplatí pro harvest",
           "description": "Multilingual abstract description for record (may contain HTML).",
           "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual",
           "uniqueItems": true
@@ -328,6 +332,7 @@
         "accessRights": {
           "description": "Taxonomy driven list of possible access to the document - open, embargoed, restirected and metadata only access. Based on COAR vocabulary - http://vocabularies.coar-repositories.org/documentation/access_rights/",
           "$comment": "Pokud není vypublikovaný, tak restricted. Po vypublikování pokud dateAvailable je v budoucnosti, tak embargoed. Jinak Open Access. Pokud popisuje fyzický objekt (tištěnou knihu), tak metadata only",
+          "$comment1": "povinné pole pro vše, ale přiřazuje se na základě nějakého klíče. v téhle fázi ho nevybírá autor ručně",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "relatedItems": {
@@ -423,7 +428,6 @@
             },
             "required": [
               "itemTitle",
-              "itemCreators",
               "itemYear",
               "itemResourceType",
               "itemRelationType"
@@ -496,7 +500,8 @@
           "uniqueItems": true
         },
         "accessibility": {
-          "description":"textové vyjádření pro harvestované zdroje",
+          "$comment":"textové vyjádření dostupnosti souborů, primárně pro harvestované zdroje. ve vkládacím formuláři by bylo pouze pro restricted access, takže v této fázi nic",
+          "$oai": "nastavuje se pro každý zdroj zvlášť během konverze podle dostupnosti souborů ve zdrojovém systému",
           "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
         "persistentIdentifiers": {

@@ -221,17 +221,20 @@
           "uniqueItems": true
         },
         "creators": {
+          "$OAIcomment": "required pouze fullName.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/authority"
           },
           "required": [
-            "fullName"
+            "fullName",
+            "affiliation"
           ],
           "minItems": 1,
           "uniqueItems": true
         },
         "contributors": {
+          "$OAIcomment": "required pouze fullName.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/authority"
@@ -274,7 +277,7 @@
         },
         "publisher": {
           "description": "volný zápis vydavatele",
-          "$comment": "místo taxonomie, našeptávání hodnot",
+          "$comment": "místo taxonomie našeptávání hodnot",
           "type": "array",
           "items": {
             "type": "string"
@@ -328,6 +331,7 @@
         "accessRights": {
           "description": "Taxonomy driven list of possible access to the document - open, embargoed, restirected and metadata only access. Based on COAR vocabulary - http://vocabularies.coar-repositories.org/documentation/access_rights/",
           "$comment": "Pokud není vypublikovaný, tak restricted. Po vypublikování pokud dateAvailable je v budoucnosti, tak embargoed. Jinak Open Access. Pokud popisuje fyzický objekt (tištěnou knihu), tak metadata only",
+          "$comment1": "povinné pole pro vše, ale přiřazuje se na základě nějakého klíče. v téhle fázi ho nevybírá autor ručně",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "relatedItems": {
@@ -538,11 +542,6 @@
             "nusl": {
               "$comment": "je otázka, které ID z NUŠL chceme uchovávat - internal ID, oai nebo PURL; bude se týkat jen starých záznamů",
               "type": "string"
-            },
-            "NR?": {
-              "$comment": "je otázka, jestli tu chceme ukládat někde i (p)id, která přidělí náš repo",
-              "type": "string",
-              "format": "URL"
             },
             "originalRecord": {
               "description": "odkaz na původní záznam, nejčastěji handle",

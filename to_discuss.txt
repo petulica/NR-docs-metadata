@@ -1,12 +1,17 @@
 dotazy call
-* objectPIDs - proč je doi dvakrát?
-* proč má creator required jen fullname ale contributor i afiliaci?
+* objectPIDs def - proč je doi dvakrát?
+* authority
+  * proč má creator required jen fullname ale contributor i afiliaci?
+  * contributor role - jen v marshmallow? proč?
+  * pokud je fullName required v definici, je potřeba u daného pole znovu?
+  * organization - comment Alžběty, co myslela?
 * subjectCategories - kde to alžběta změnila? proč?
-* contributor role - jen v marshmallow? proč?
-
+* persistentIdentifiers - komentář alžběty, souhlasím. nwm, jestli by možná nemělo stát někde zvlášť
 
 diskuze týmu metadata
+* jména osob - upravit pole, tak aby teda bylo v metadatech to i ono, tak jak to vede datacite? eliminace chyb?
 * co s polem provider
+* publisher pro nové záznamy povinný? pozor ŠL
 * může být accessibility užitečná i pro ručně vložené věci?
 * external location stejná otázka
 * extent - možná spíš pak u každého souboru nebo vytažené ze souborů, a zase v případě harvestu?

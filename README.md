@@ -7,3 +7,4 @@ Reasons for some changes:
 * publisher - for docs is NOT a taxonomy but free text with the value whisperer, because of the variety in publishing, especially articles
 * accessibility - přidáno - zejména pro harvest, slovní vyjádření o přístupu (př. volně dostupné v repozitáři Univerzity Karlovy, dostupné z ústavu fyziky AV ČR). u ručně vložených v případě restricted by se dalo asi také využít
 * languages - přidáno minItems 1
+* relatedItem - změna povinnosti - pro dokumenty nejsou povinní creators, jelikož se většinou bude jednat o vztah část - celek, zejména pak u článků, odkazy na časopis.
