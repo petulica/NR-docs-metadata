@@ -1,3 +1,12 @@
+
+TO DO:
+* v readme * languages - přidáno minItems 1, ale tohle by už mělo být v marshmallow, ověřit. proč by pro data mělo být jinak?
+* sloužit soubor harvest a docs. řešit odlišnosti pomocí komentu $oai
+* porovnat soubor sloučený s tím, co je v data modelu a vytvořit z toho základ pro vše
+* výsledkem by měl být: základ pro dokumenty, specifické pro vškp, vyjimková pravidla pro harvest
+
+
+
 dotazy call
 * objectPIDs def - proč je doi dvakrát?
 * authority
@@ -6,7 +15,7 @@ dotazy call
   * pokud je fullName required v definici, je potřeba u daného pole znovu?
   * organization - comment Alžběty, co myslela?
 * subjectCategories - kde to alžběta změnila? proč?
-* persistentIdentifiers - komentář alžběty, souhlasím. nwm, jestli by možná nemělo stát někde zvlášť
+* persistentIdentifiers - komentář alžběty, odpověď je ne, protože podle description jsou to PID přidělená Národním repozitářem.
 
 diskuze týmu metadata
 * jména osob - upravit pole, tak aby teda bylo v metadatech to i ono, tak jak to vede datacite? eliminace chyb?
@@ -16,6 +25,7 @@ diskuze týmu metadata
 * external location stejná otázka
 * extent - možná spíš pak u každého souboru nebo vytažené ze souborů, a zase v případě harvestu?
 * rights -  "podmíněně povinné - if ručně vložené bez omezení, then přidělit Dílo chráněno podle aut. zákona v cz a en" - nechat pro dokumenty?
+* povinnost abstrakt pro nové záznamy?
 
 
 nutné změny pro harvest

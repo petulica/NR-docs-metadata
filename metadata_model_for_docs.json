@@ -355,7 +355,6 @@
                 "required": [
                   "fullName"
                 ],
-                "minItems": 1,
                 "uniqueItems": true
               },
               "itemContributors": {
@@ -469,7 +468,6 @@
         },
         "geoLocations": {
           "type": "array",
-          "$comment": "Alzp: Name of required value changed from place to geoLocationPlace",
           "items": {
             "type": "object",
             "properties": {
