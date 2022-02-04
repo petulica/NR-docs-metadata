@@ -176,6 +176,23 @@
         }
       ]
     },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "place": {
+          "type": "string"
+        },
+        "country": {
+          "$comment": "podmíněně povinné - uvedu-li místo, tak musím uvést i kod země",
+          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
+        }
+      },
+      "required": [
+        "place",
+        "country"
+      ]
+    },
     "longitude": {
       "type": "number",
       "minimum": -180,
@@ -343,6 +360,8 @@
         "relatedItems": {
           "description": "linkdata, propojení přidružených dokumentů a datasetů.",
           "$comment": "Pokud by se muselo vyplňovat ručně, tak by bylo vhodné škálovat pole (včetně povinností) k vyplnění podle zvoloného připojeného zdroje (tzn. vyberu nejprve, co chci připojit), př. když chci připojit časopis k článku, dostanu jiný set polí, než když chci připojit článek k datům.",
+          "$comment1": "optimální podmínka v marshmallow, že buď dáš DOI nebo URL",
+          "$oai": "vyjimka v povinnostech; povinný pouze název",
           "type": "array",
           "items": {
             "type": "object",
@@ -527,6 +546,31 @@
           },
           "uniqueItems": true
         },
+        "externalLocation": {
+          "description": "externí umístění dokumentu (mimo repozitáře), formát URL",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "externalLocationURL" : {
+              "type": "string",
+              "format": "URL"
+            },
+            "externalLocationNote" : {
+              "type": "string"
+            },
+          },
+          "required": [
+            "externalLocationURL"
+          ]
+        },
+        "extent": {
+          "description": "Extent of the work. If it is not paged, then it takes over number of pages of the entire pdf.",
+          "$comment": "stejná struktura jako Size od DataCite. V NUŠL tyto hodnoty jsou. Jedná se orientační info. Do budoucna můžeme řešit automatické generování.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "persistentIdentifiers": {
           "description": "Persistent identifier/s of object assigned by National Repository. Status needed for DOI requests.",
           "type": "array",
@@ -598,8 +642,7 @@
         "resourceType",
         "accessRights",
         "dateIssued",
-        "language",
-        "publisher"
+        "language"
       ]
     }
   }
