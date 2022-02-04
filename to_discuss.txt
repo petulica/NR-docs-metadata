@@ -14,8 +14,12 @@ dotazy call
   * contributor role - jen v marshmallow? proč?
   * pokud je fullName required v definici, je potřeba u daného pole znovu?
   * organization - comment Alžběty, co myslela?
+  * relatedItem - nedostaneme nameType, rozhodně ne z dat NUŠL. jak to u akce připojit článek?
 * subjectCategories - kde to alžběta změnila? proč?
 * persistentIdentifiers - komentář alžběty, odpověď je ne, protože podle description jsou to PID přidělená Národním repozitářem.
+* provider - pro NUŠL byl povinný údaj a (polo)automaticky přiřazovaný, jak budeme řešit zde? komunitami? primární komunita je vždy provider a odpovědná za obsah a zveřejnění?
+* subject - pořád si nemyslím, že je to dobře. viz komentář u pole.
+
 
 diskuze týmu metadata
 * jména osob - upravit pole, tak aby teda bylo v metadatech to i ono, tak jak to vede datacite? eliminace chyb?
@@ -26,6 +30,13 @@ diskuze týmu metadata
 * extent - možná spíš pak u každého souboru nebo vytažené ze souborů, a zase v případě harvestu?
 * rights -  "podmíněně povinné - if ručně vložené bez omezení, then přidělit Dílo chráněno podle aut. zákona v cz a en" - nechat pro dokumenty?
 * povinnost abstrakt pro nové záznamy?
+* nrOAI - nemělo by být spíš třeba repoOAI. to nr je tam takové divné. platí i pro případná další pole pro NR přímo
+* lze nějak spojit geoLocations a location z NUŠL, kde byl volný text pro město/místo a kod země?
+* publicationPlace - má smysl v digit. prostředí řešit místo vydání? někdy je to i problém zjistit.
+* relatedItem
+  * proč pro data není povinné URL? kvůli DOI?
+  * udělat URL povinné pro dokumenty? optimální podmínka, že buď dáš DOI nebo URL
+  * na tom nám spadne vše, co takovu info má. Opravovat před migrací? (NUŠL: Název, info o propojení - vol, číslo v jednom poli, ISSN, ISBN.) týká se 24,858 záznamů, z toho ručně jen 64, pak je tam IDR no a potom asi hlavně ASEP. takže pro ASEP asi vyjimku?
 
 
 nutné změny pro harvest

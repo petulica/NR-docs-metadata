@@ -8,3 +8,5 @@ Reasons for some changes compare to model for data:
 * accessibility - přidáno - zejména pro harvest, slovní vyjádření o přístupu (př. volně dostupné v repozitáři Univerzity Karlovy, dostupné z ústavu fyziky AV ČR). u ručně vložených v případě restricted by se dalo asi také využít
 * languages - přidáno minItems 1
 * relatedItem - změna povinnosti - pro dokumenty nejsou povinní creators, jelikož se většinou bude jednat o vztah část - celek, zejména pak u článků, odkazy na časopis.
+* recordIdentifiers - přidána sekce systémových indentifikátorů pro účely harvestu, importu a migrace.
+* series - added - works also kind of like tagging similar things, so might be useful also for data. matter of discussion. Title of the series is required if the field is applied

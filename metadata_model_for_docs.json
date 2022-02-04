@@ -274,6 +274,11 @@
             "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
           }
         },
+        "subject": {
+          "description": "subject headings that describes the work taken over from a vocabulary (taxonomy). Current vocabularies - PSH, MEDVIK, CZMESH.",
+          "$comment": "ověřit, zda se jedná o optimální řešení taxonomií, za mě by mělo být přes API kvůli aktualizacím. Např. vyšla aktualizace CZ-MESH, kterou nemáme zanesenou."
+          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
+        },
         "publisher": {
           "description": "volný zápis vydavatele",
           "$comment": "místo taxonomie, našeptávání hodnot",
@@ -336,15 +341,15 @@
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "relatedItems": {
-          "description": "pole pro linkdata, provázání částí a celku nebo jinak přidružených dokumentů a datasetů. předpokládá se u dizertací vydaných jako knih, příspěvky ve sborníku na sborník, článek na časopis, kapitola na knihu, recenze na článek nebo knihu, dataset na článek,...",
-          "$comment": "V BUDOUCNOSTI: bylo by dobré naškálovat pro některé related typy dokumentů různá povinná pole - př. pokud je related item book, tak chci isbn. pokud časopis chci číslo, ročník; viz komenty níže.",
+          "description": "linkdata, propojení přidružených dokumentů a datasetů.",
+          "$comment": "Pokud by se muselo vyplňovat ručně, tak by bylo vhodné škálovat pole (včetně povinností) k vyplnění podle zvoloného připojeného zdroje (tzn. vyberu nejprve, co chci připojit), př. když chci připojit časopis k článku, dostanu jiný set polí, než když chci připojit článek k datům.",
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "itemTitle": {
-                "description": "název propojeného dokumentu - časopisu, knihy, článku u recenze, ...",
+                "description": "název propojeného dokumentu",
                 "type": "string"
               },
               "itemCreators": {
@@ -395,7 +400,6 @@
                 "format": "URL"
               },
               "itemYear": {
-                "$comment": "při slučování modelů se bude muset doplnit: if itemResourceType = dataset then use dateAvailable, else use dateIssued",
                 "$ref": "#/definitions/date"
               },
               "itemVolume": {
@@ -502,6 +506,27 @@
           "$oai": "nastavuje se pro každý zdroj zvlášť během konverze podle dostupnosti souborů ve zdrojovém systému",
           "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
+        "series": {
+          "description": "edice; tématicky sdružuje podobné věci",
+          "$comment": "našeptávač již uložených hodnot",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "seriesTitle": {
+                "type": "string"
+              },
+              "seriesVolume": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "seriesTitle"
+            ]
+          },
+          "uniqueItems": true
+        },
         "persistentIdentifiers": {
           "description": "Persistent identifier/s of object assigned by National Repository. Status needed for DOI requests.",
           "type": "array",
@@ -531,6 +556,39 @@
             ],
             "minItems": 1,
             "uniqueItems": true
+          }
+        },
+        "recordIdentifiers": {
+          "description": "systémové identifikátory a trvalé adresy pořízené skrze OAI, případně importy/migrace",
+          "$comment" : "možná bude sekce OAI fungovat jinak,takže by bylo potřeba to upravit. Ale tohle jsou za mě údaje, které by se měli ukládat přímo v záznamu",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "nusl": {
+              "$comment": "je otázka, které ID z NUŠL chceme uchovávat - internal ID, oai nebo PURL; bude se týkat POUZE starých záznamů",
+              "type": "string"
+            },
+            "originalRecord": {
+              "description": "odkaz na původní záznam",
+              "$comment": "nejčastěji handle, ale ne pokaždé, někdy různé hybrydy, takže nemá smysl řešit přes nějaký type, dokud nedojde ke standardizaci v systémech",
+              "$comment": "JEDINÝ Z TĚCHTO IDs se bude zobrazovat koncovému uživateli v detailu záznamu",
+              "type": "string",
+              "format": "URL"
+            },
+            "originalRecordOAI": {
+              "description": "id původního záznamu ve formátu oai",
+              "$comment": "podmíněně povinné - if harvest",
+              "type": "string"
+            },
+            "catalogueSysNo": {
+              "description": "pravděpodobně číslo, případy importů záznamů exportovaných z knihovních katalogů ručně hromadně, tj. nejsou získány harvestem",
+              "$comment": "doufejme, že časem vymizí, ale stejně jako u original record ještě tam nejsme."
+              "type": "string"
+            },
+            "nrOAI": {
+              "description": "oai id, které NR přiděluje všem svým záznamům a má strukturu nr+id. vzniká automaticky s finalizací záznamu, slouží pro sklízení NR třetími stranami",
+              "type": "string"
+            },
           }
         }
       },
