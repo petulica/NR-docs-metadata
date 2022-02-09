@@ -210,6 +210,7 @@
       "properties": {
         "titles": {
           "description": "Titles of the object/work.",
+          "$comment": "MARSHMALLOW: required mainTitle",
           "type": "array",
           "items": {
             "type": "object",
@@ -234,29 +235,35 @@
             ]
           },
           "minItems": 1,
-          "uniqueItems": true,
-          "$requirments": "dataPilot  - MARSHMALLOW required mainTitle, pro vkládání nevidím problém, pro harvest se vždy nastavil main. ZÁVĚR P: nerušit",
+          "uniqueItems": true
         },
         "creators": {
-          "$comment": "vrátit se k required v definicích.",
+          "$OAIcomment": "required pouze fullName, tzn. z marshmallow odstranit/vyjimku na afiliaci.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/authority"
           },
+          "required": [
+            "fullName"
+          ],
+          "minItems": 1,
           "uniqueItems": true
         },
         "contributors": {
-          "$comment": "vrátit se k required v definicích.",
+          "$OAIcomment": "required pouze fullName, tzn. z marshmallow odstranit/vyjimku na afiliaci.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/authority"
           },
+          "required": [
+            "fullName"
+          ],
           "uniqueItems": true
         },
         "resourceType": {
+          "$comment": "MARSHMALLOW: required pouze 1 hodnota z taxonomie, tj. min 1, max 1",
           "description": "Taxonomy driven typology of objects that's possible to store in the repository",
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
-          "$requirments": "dataPilot - MARSHMALLOW: required pouze 1 hodnota z taxonomie, tj. min 1, max 1 - myslím, že tady stále platí, rozhodně min. otázka max."
+          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "dateIssued": {
           "description": "The date the resource is originaly published by publisher, in case of grey literature made publicly available by the institution.",
@@ -285,22 +292,24 @@
         },
         "subject": {
           "description": "subject headings that describes the work taken over from a vocabulary (taxonomy). Current vocabularies - PSH, MEDVIK, CZMESH.",
-          "$comment_RFC": "ověřit, zda se jedná o optimální řešení taxonomií, za mě by mělo být přes API kvůli aktualizacím. Např. vyšla aktualizace CZ-MESH, kterou nemáme zanesenou. Možná řešení jen nastavení struktury subjectu, ale neodkazovat na žádné taxonomie. pro migraci NUŠL by stačilo"
+          "$comment": "ověřit, zda se jedná o optimální řešení taxonomií, za mě by mělo být přes API kvůli aktualizacím. Např. vyšla aktualizace CZ-MESH, kterou nemáme zanesenou."
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "publisher": {
           "description": "volný zápis vydavatele",
-          "$comment_RFC": "ZMĚNA TYPU: místo taxonomie, našeptávání hodnot",
+          "$comment": "místo taxonomie, našeptávání hodnot",
           "type": "array",
           "items": {
             "type": "string"
           },
-          "uniqueItems": true
+          "uniqueItems": true,
+          "minItems": 1
         },
         "subjectCategories": {
           "description": "FRASCATI oborové třídění - může sloužit jako podklad pro oborové filtrování",
           "$comment": "Alzp: Name changed to categories",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
+          "minItems": 1,
           "uniqueItems": true
         },
         "language": {
@@ -335,16 +344,21 @@
         },
         "rights": {
           "description": "Any license or copyright information for this resource. Taxonomy field.",
+          "$comment": "zkontrolovat, jestli naše struktura je dobře exportovatelná do DATACITE",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
           "uniqueItems": true
         },
         "accessRights": {
           "description": "Taxonomy driven list of possible access to the document - open, embargoed, restirected and metadata only access. Based on COAR vocabulary - http://vocabularies.coar-repositories.org/documentation/access_rights/",
           "$comment": "Pokud není vypublikovaný, tak restricted. Po vypublikování pokud dateAvailable je v budoucnosti, tak embargoed. Jinak Open Access. Pokud popisuje fyzický objekt (tištěnou knihu), tak metadata only",
+          "$comment1": "povinné pole pro vše, ale přiřazuje se na základě nějakého klíče. v téhle fázi ho nevybírá autor ručně",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "relatedItems": {
           "description": "linkdata, propojení přidružených dokumentů a datasetů.",
+          "$comment": "Pokud by se muselo vyplňovat ručně, tak by bylo vhodné škálovat pole (včetně povinností) k vyplnění podle zvoloného připojeného zdroje (tzn. vyberu nejprve, co chci připojit), př. když chci připojit časopis k článku, dostanu jiný set polí, než když chci připojit článek k datům.",
+          "$comment1": "optimální podmínka v marshmallow, že buď dáš DOI nebo URL",
+          "$oai": "vyjimka v povinnostech; povinný pouze název",
           "type": "array",
           "items": {
             "type": "object",
@@ -405,15 +419,19 @@
                 "$ref": "#/definitions/date"
               },
               "itemVolume": {
+                "$comment": "if itemResourceType = journal then required",
                 "type": "string"
               },
               "itemIssue": {
+                "$comment": "if itemResourceType = journal then required",
                 "type": "string"
               },
               "itemStartPage": {
+                "$comment": "if itemResourceType = journal/book then required",
                 "type": "string"
               },
               "itemEndPage": {
+                "$comment": "if itemResourceType = journal/book then required",
                 "type": "string"
               },
               "itemPublisher": {
@@ -428,15 +446,17 @@
               }
             },
             "required": [
-              "itemTitle"
+              "itemTitle",
+              "itemYear",
+              "itemResourceType",
+              "itemRelationType"
             ]
           },
-          "$requirments": "required je založené na jistotách harvestu. pro manuální daleko přísnější.",
           "uniqueItems": true
         },
         "fundingReferences": {
           "description": "informace o přidruženém projektu",
-          "$comment_RFC": "MIGRACE NUŠL - tohle by bylo dobré, protože v datech NUŠL hrozný stav v polích pro poskytovatele. dvě možnosti: 1) u českých projektů na základě prvních dvou znaků v řetězci s identifikátorem projektu lze přiřadit poskytovatele.  2) nemigrovat poskytovatele vůbec, ale bude to průser, až to zjistí někdo z poskytovatelů metadat.",
+          "$comment": "u českých projektů na základě prvních dvou znaků v řetězci s identifikátorem projektu lze přiřadit poskytovatele",
           "type": "array",
           "items": {
             "type": "object",

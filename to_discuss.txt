@@ -12,16 +12,22 @@ dotazy call
   * jména osob - upravit pole, tak aby teda bylo v metadatech to i ono kvůli lepší UX při ručním vkládání
 * subjectCategories - kde to alžběta změnila? proč?
 * persistentIdentifiers - komentář alžběty, odpověď je ne, protože podle description jsou to PID přidělená Národním repozitářem.
-* subject - pořád si nemyslím, že je to dobře. viz komentář u pole.
-* languages - přidáno minItems 1, ale tohle by už mělo být v marshmallow, ověřit. proč by pro data mělo být jinak?
+* subjects - pořád si nemyslím, že je to dobře. viz komentář u pole.
+* required:
+  * v definicích?
+  * nevím, co s required ve vnořených polích - př. relatedItem, kde u identifikátorů to rozhodně dává smysl.
+
 
 
 TO DO:
-* events - přihodit!, pozn. definice location už v modelu
 * communities - přihodit z datového
+* rights -           "$comment": "zkontrolovat, jestli naše struktura je dobře exportovatelná do DATACITE"
 
+Povinnosti:
+* subjectCategories - pro ruční vkládání nových objektů?
+* resourceType - zachovat, že to může být skutečně jen jeden typ?
 
-nutné opravy:
+nutné opravy v NUŠL (IDR):
 * osoby - NUŠL + IDR
   * chybí personal vs Organizational. hromadné úpravy pro ručně vkládané, vyjímka pro harvest
   * povinnost afiliací - doplnit do IDR, zbytek nutná vyjimka, pro nové záznamy povinnost pouze ručně
