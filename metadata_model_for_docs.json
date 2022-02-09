@@ -460,6 +460,7 @@
               "funder"
             ]
           },
+          "$requirments": "povinnosti se sice tady vypustit dají, ale mít číslo projektu bez poskytovatele by asi vzbudilo rozruch. řešení viz comment_RFC",
           "uniqueItems": true
         },
         "version": {
@@ -495,15 +496,16 @@
               "geoLocationPlace"
             ]
           },
-          "uniqueItems": true
+          "uniqueItems": true,
+          "$requirments": "tady by asi nemusel být problém, rozhodně ne ted, kdy se pole prakticky nepoužívá",
         },
         "accessibility": {
-          "$comment":"textové vyjádření dostupnosti souborů, primárně pro harvestované zdroje. ve vkládacím formuláři by bylo pouze pro restricted access, takže v této fázi nic",
+          "$comment":"textové vyjádření dostupnosti souborů, primárně pro harvestované zdroje. ve vkládacím formuláři by bylo pouze pro restricted access",
           "$oai": "nastavuje se pro každý zdroj zvlášť během konverze podle dostupnosti souborů ve zdrojovém systému",
           "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
         "series": {
-          "description": "edice; tématicky sdružuje podobné věci",
+          "description": "edice; tématicky sdružuje podobné věci, nemusí se jednat o pravou edici, ale tagování/grupování podobných záznamů",
           "$comment": "našeptávač již uložených hodnot",
           "type": "array",
           "items": {
@@ -524,7 +526,7 @@
           "uniqueItems": true
         },
         "externalLocation": {
-          "description": "externí umístění dokumentu (mimo repozitáře), formát URL",
+          "description": "externí umístění dokumentu (mimo repozitáře)",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -581,24 +583,23 @@
         },
         "recordIdentifiers": {
           "description": "systémové identifikátory a trvalé adresy pořízené skrze OAI, případně importy/migrace",
-          "$comment" : "možná bude sekce OAI fungovat jinak,takže by bylo potřeba to upravit. Ale tohle jsou za mě údaje, které by se měli ukládat přímo v záznamu",
+          "$comment_RFC" : "možná bude sekce OAI fungovat jinak,takže by bylo potřeba to upravit. Ale tohle jsou za mě údaje, které by se měli ukládat přímo v záznamu",
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "nusl": {
-              "$comment": "je otázka, které ID z NUŠL chceme uchovávat - internal ID, oai nebo PURL; bude se týkat POUZE starých záznamů",
+              "$comment_RFC": "je otázka, které ID z NUŠL chceme uchovávat - internal ID, oai nebo PURL; bude se týkat POUZE starých záznamů",
               "type": "string"
             },
             "originalRecord": {
               "description": "odkaz na původní záznam",
-              "$comment": "nejčastěji handle, ale ne pokaždé, někdy různé hybrydy, takže nemá smysl řešit přes nějaký type, dokud nedojde ke standardizaci v systémech",
+              "$comment_RFC": "nejčastěji handle, ale ne pokaždé, někdy různé hybrydy, takže nemá smysl řešit přes nějaký type, dokud nedojde ke standardizaci v systémech",
               "$comment": "JEDINÝ Z TĚCHTO IDs se bude zobrazovat koncovému uživateli v detailu záznamu",
               "type": "string",
               "format": "URL"
             },
             "originalRecordOAI": {
               "description": "id původního záznamu ve formátu oai",
-              "$comment": "podmíněně povinné - if harvest",
               "type": "string"
             },
             "catalogueSysNo": {

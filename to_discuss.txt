@@ -11,12 +11,15 @@ dotazy call
   * relatedItem - nedostaneme nameType, rozhodně ne z dat NUŠL. jak to u akce připojit článek?
   * jména osob - upravit pole, tak aby teda bylo v metadatech to i ono kvůli lepší UX při ručním vkládání
 * subjectCategories - kde to alžběta změnila? proč?
-* persistentIdentifiers - komentář alžběty, odpověď je ne, protože podle description jsou to PID přidělená Národním repozitářem.
+* persistentIdentifiers - komentář alžběty, odpověď je ne, protože podle description jsou to PID přidělená Národním repozitářem. zohlednit také requirments a možná celkové řešení tohoto pole
 * subjects - pořád si nemyslím, že je to dobře. viz komentář u pole.
 * required:
   * v definicích?
   * nevím, co s required ve vnořených polích - př. relatedItem, kde u identifikátorů to rozhodně dává smysl.
 
+
+Hanka:
+* accessibility vs. externalLocationNote - nepokrylo by první potřeby toho druhého?
 
 
 TO DO:
