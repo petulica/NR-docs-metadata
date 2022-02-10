@@ -65,17 +65,11 @@
                 "Personal"
               ]
             },
-            "affiliation": {
+            "affiliations": {
               "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
-              "description": "taxonomie institutions",
-              "$comment": "povinná pro pole creator a contributor (autory a přispěvatele popisovaného objektu/datasetu) v marshmallow; neplatí pro harvest!",
-              "$oai": "není povinné"
+              "description": "taxonomie institutions"
             }
-          },
-          "required": [
-            "fullName"
-          ],
-          "uniqueItems": true
+          }
         }
       ]
     },
@@ -88,14 +82,10 @@
         {
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         }
-      ],
-      "required": [
-        "fullName",
-        "nameType"
       ]
     },
     "authority": {
-      "anyOf": [
+      "oneOf": [
         {
           "$ref": "#/definitions/person"
         },
@@ -104,7 +94,7 @@
         }
       ]
     },
-    "objectPIDs": {
+    "objectPID": {
       "description": "Persistent identifier/s of object",
       "type": "object",
       "additionalProperties": false,
@@ -115,7 +105,6 @@
         "scheme": {
           "type": "string",
           "enum": [
-            "doi",
             "DOI",
             "Handle",
             "ISBN",
@@ -204,7 +193,6 @@
     },
     "Document": {
       "id": "#document",
-      "title": "DOPLNIT",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -243,20 +231,31 @@
           "items": {
             "$ref": "#/definitions/authority"
           },
+          "minItems": 1,
           "uniqueItems": true
         },
         "contributors": {
-          "$comment": "vrátit se k required v definicích.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/authority"
-          },
-          "uniqueItems": true
-        },
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/authority"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "uniqueItems": true
+              },
         "resourceType": {
           "description": "Taxonomy driven typology of objects that's possible to store in the repository",
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
-          "$requirments": "dataPilot - MARSHMALLOW: required pouze 1 hodnota z taxonomie, tj. min 1, max 1 - myslím, že tady stále platí, rozhodně min. otázka max."
+          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "dateIssued": {
           "description": "The date the resource is originaly published by publisher, in case of grey literature made publicly available by the institution.",
@@ -276,21 +275,23 @@
           "$comment1": "neukazuje se ve vkládacím formuláři. jen při editaci záznamu!",
           "$ref": "#/definitions/date"
         },
-        "keywords": {
-          "description": "free-form keywords, often created by author(s)",
-          "type": "array",
-          "items": {
-            "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
-          }
+        "subjects": {
+            "description": "subject by vocabularies or free-form keywords created by author(s)",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "subject": {"type": "multilingual"},
+                    "subjectScheme": {"type": "string"},
+                    "classificationCode": {"type": "string"},
+                    "valueURI": {"type": "string", "format": "uri"}
+                },
+                "required": ["subject"]
+            },
+            "uniqueItems": true
         },
-        "subject": {
-          "description": "subject headings that describes the work taken over from a vocabulary (taxonomy). Current vocabularies - PSH, MEDVIK, CZMESH.",
-          "$comment_RFC": "ověřit, zda se jedná o optimální řešení taxonomií, za mě by mělo být přes API kvůli aktualizacím. Např. vyšla aktualizace CZ-MESH, kterou nemáme zanesenou. Možná řešení jen nastavení struktury subjectu, ale neodkazovat na žádné taxonomie. pro migraci NUŠL by stačilo",
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
-        },
-        "publisher": {
+        "publishers": {
           "description": "volný zápis vydavatele",
-          "$comment_RFC": "ZMĚNA TYPU: místo taxonomie, našeptávání hodnot",
           "type": "array",
           "items": {
             "type": "string"
@@ -299,14 +300,15 @@
         },
         "subjectCategories": {
           "description": "FRASCATI oborové třídění - může sloužit jako podklad pro oborové filtrování",
-          "$comment": "Alzp: Name changed to categories",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
           "uniqueItems": true
         },
-        "language": {
+        "languages": {
           "description": "ISO 639-2 B in slug, ISO 639-2 T in alias, ISO 639-1 as Alpha2.",
-          "$comment": "Alpha2 se bude exportovat pro datacite",
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
+          "type": "array",
+          "items": {
+            "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
+          },
           "uniqueItems": true
         },
         "notes": {
@@ -320,20 +322,18 @@
         "abstract": {
           "$oai" : "povinnost v marshmallow neplatí pro harvest",
           "description": "Multilingual abstract description for record (may contain HTML).",
-          "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual",
-          "uniqueItems": true
+          "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
         "methods": {
           "description": "Multilingual methodology employed for the study or research.(may contain HTML)",
-          "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual",
-          "uniqueItems": true
+          "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
         "technicalInfo": {
           "description": "Multilingual detailed information that may be associated with design, implementation, operation, use, and/or maintenance of a process or system.(may contain HTML)",
-          "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual",
-          "uniqueItems": true
+          "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
         "rights": {
+          "$comment": "POLE array",
           "description": "Any license or copyright information for this resource. Taxonomy field.",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
           "uniqueItems": true
@@ -359,9 +359,6 @@
                 "items": {
                   "$ref": "#/definitions/authority"
                 },
-                "required": [
-                  "fullName"
-                ],
                 "uniqueItems": true
               },
               "itemContributors": {
@@ -381,9 +378,6 @@
                     }
                   ]
                 },
-                "required": [
-                  "fullName"
-                ],
                 "uniqueItems": true
               },
               "itemPIDs": {
@@ -402,7 +396,7 @@
                 "format": "URL"
               },
               "itemYear": {
-                "$ref": "#/definitions/date"
+                "type": "integer",
               },
               "itemVolume": {
                 "type": "string"
@@ -431,12 +425,11 @@
               "itemTitle"
             ]
           },
-          "$requirments": "required je založené na jistotách harvestu. pro manuální daleko přísnější.",
           "uniqueItems": true
         },
         "fundingReferences": {
           "description": "informace o přidruženém projektu",
-          "$comment_RFC": "MIGRACE NUŠL - tohle by bylo dobré, protože v datech NUŠL hrozný stav v polích pro poskytovatele. dvě možnosti: 1) u českých projektů na základě prvních dvou znaků v řetězci s identifikátorem projektu lze přiřadit poskytovatele.  2) nemigrovat poskytovatele vůbec, ale bude to průser, až to zjistí někdo z poskytovatelů metadat.",
+          "$comment": "MIGRACE NUŠL - tohle by bylo dobré, protože v datech NUŠL hrozný stav v polích pro poskytovatele. u českých projektů na základě prvních dvou znaků v řetězci s identifikátorem projektu lze přiřadit poskytovatele.",
           "type": "array",
           "items": {
             "type": "object",
@@ -460,7 +453,6 @@
               "funder"
             ]
           },
-          "$requirments": "povinnosti se sice tady vypustit dají, ale mít číslo projektu bez poskytovatele by asi vzbudilo rozruch. řešení viz comment_RFC",
           "uniqueItems": true
         },
         "version": {
@@ -496,8 +488,7 @@
               "geoLocationPlace"
             ]
           },
-          "uniqueItems": true,
-          "$requirments": "tady by asi nemusel být problém, rozhodně ne ted, kdy se pole prakticky nepoužívá"
+          "uniqueItems": true
         },
         "accessibility": {
           "$comment":"textové vyjádření dostupnosti souborů, primárně pro harvestované zdroje. ve vkládacím formuláři by bylo pouze pro restricted access",
@@ -506,7 +497,7 @@
         },
         "series": {
           "description": "edice; tématicky sdružuje podobné věci, nemusí se jednat o pravou edici, ale tagování/grupování podobných záznamů",
-          "$comment": "našeptávač již uložených hodnot",
+          "$comment": "našeptávač již uložených hodnot v title",
           "type": "array",
           "items": {
             "type": "object",
@@ -545,74 +536,51 @@
         "extent": {
           "description": "Extent of the work. If it is not paged, then it takes over number of pages of the entire pdf.",
           "$comment": "stejná struktura jako Size od DataCite. V NUŠL tyto hodnoty jsou. Jedná se orientační info. Do budoucna můžeme řešit automatické generování.",
-          "type": "array",
-          "items": {
             "type": "string"
-          }
         },
         "persistentIdentifiers": {
-          "description": "Persistent identifier/s of object assigned by National Repository. Status needed for DOI requests.",
+          "description": "Persistent identifier/s of object as ISBN, DOI, etc. + assigned by National Repository. Status needed for DOI requests.",
           "type": "array",
           "$comment": "Alzp: shouldn't be property status set as optional, since is used only in DOI request use case?",
           "items": {
-            "allOf": [
-              {
                 "$ref": "#/definitions/objectPIDs"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "description": "Status of an identifier (e.g. requested, registered, external...)",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "status"
-                ]
-              }
-            ],
-            "required": [
-              "identifier",
-              "scheme",
-              "status"
-            ],
-            "minItems": 1,
+            },
             "uniqueItems": true
-          }
         },
-        "recordIdentifiers": {
-          "description": "systémové identifikátory a trvalé adresy pořízené skrze OAI, případně importy/migrace",
-          "$comment_RFC" : "možná bude sekce OAI fungovat jinak,takže by bylo potřeba to upravit. Ale tohle jsou za mě údaje, které by se měli ukládat přímo v záznamu",
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "nusl": {
-              "$comment_RFC": "je otázka, které ID z NUŠL chceme uchovávat - internal ID, oai nebo PURL; bude se týkat POUZE starých záznamů",
-              "type": "string"
-            },
-            "originalRecord": {
-              "description": "odkaz na původní záznam",
-              "$comment_RFC": "nejčastěji handle, ale ne pokaždé, někdy různé hybrydy, takže nemá smysl řešit přes nějaký type, dokud nedojde ke standardizaci v systémech",
-              "$comment": "JEDINÝ Z TĚCHTO IDs se bude zobrazovat koncovému uživateli v detailu záznamu",
-              "type": "string",
-              "format": "URL"
-            },
-            "originalRecordOAI": {
-              "description": "id původního záznamu ve formátu oai",
-              "type": "string"
-            },
-            "catalogueSysNo": {
-              "description": "pravděpodobně číslo, případy importů záznamů exportovaných z knihovních katalogů ručně hromadně, tj. nejsou získány harvestem",
-              "$comment": "doufejme, že časem vymizí, ale stejně jako u original record ještě tam nejsme.",
-              "type": "string"
-            },
-            "nrOAI": {
-              "description": "oai id, které NR přiděluje všem svým záznamům a má strukturu nr+id. vzniká automaticky s finalizací záznamu, slouží pro sklízení NR třetími stranami",
-              "type": "string"
-            }
+        "originalRecord": {
+          "description": "odkaz na původní záznam",
+          "$oai": "zobrazovat koncovému uživateli v detailu záznamu jako původní místo uložení. objevuje se jen u harvestu",
+          "type": "string",
+          "format": "URL"
+        },
+       "recordIdentifiers": {
+         "description": "systémové identifikátory a trvalé adresy pořízené skrze OAI, případně importy/migrace",
+         "$comment_RFC" : "možná bude sekce OAI fungovat jinak,takže by bylo potřeba to upravit. Ale tohle jsou za mě údaje, které by se měli ukládat přímo v záznamu; nusl = PURL",
+         "type": "array",
+         "items": {
+           "type": "object",
+           "properties": {
+             "identifier": {
+               "type": "string"
+             },
+             "scheme": {
+               "type": "string",
+               "enum": [
+                 "nusl",
+                 "originalRecordOAI",
+                 "catalogueSysNo",
+                 "nrOAI"
+               ]
+             }
+           },
+           "required": [
+             "identifier",
+             "scheme"
+           ],
+           "uniqueItems": true
          }
-       },
+       }
+     },
       "events": {
           "description": "událost, konference",
           "type": "array",
