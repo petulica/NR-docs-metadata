@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "authorityBase": {
+    "authority": {
       "type": "object",
       "properties": {
         "fullName": {
@@ -13,6 +13,10 @@
             "Organizational",
             "Personal"
           ]
+        },
+        "affiliations": {
+          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
+          "description": "taxonomie institutions"
         },
         "authorityIdentifiers": {
           "type": "array",
@@ -47,51 +51,7 @@
         }
       },
       "required": [
-        "fullName",
-        "nameType"
-      ]
-    },
-    "person": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/authorityBase"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "nameType": {
-              "type": "string",
-              "enum": [
-                "Personal"
-              ]
-            },
-            "affiliations": {
-              "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
-              "description": "taxonomie institutions"
-            }
-          }
-        }
-      ]
-    },
-    "organization": {
-      "$comment": "Alzp: Name of the property? Should be object?",
-      "anyOf": [
-        {
-          "$ref": "#/definitions/authorityBase"
-        },
-        {
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
-        }
-      ]
-    },
-    "authority": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/person"
-        },
-        {
-          "$ref": "#/definitions/organization"
-        }
+        "fullName"
       ]
     },
     "objectPID": {
@@ -196,7 +156,10 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "titles": {
+        "Title": {
+          "type": "string"
+        },
+        "additionalTitles": {
           "description": "Titles of the object/work.",
           "type": "array",
           "items": {
@@ -209,7 +172,7 @@
               "titleType": {
                 "type": "string",
                 "enum": [
-                  "mainTitle",
+                  "translatedTitle",
                   "alternativeTitle",
                   "subtitle",
                   "other"
@@ -553,7 +516,7 @@
           "type": "string",
           "format": "URL"
         },
-       "recordIdentifiers": {
+       "systemIdentifiers": {
          "description": "systémové identifikátory a trvalé adresy pořízené skrze OAI, případně importy/migrace",
          "$comment_RFC" : "možná bude sekce OAI fungovat jinak,takže by bylo potřeba to upravit. Ale tohle jsou za mě údaje, které by se měli ukládat přímo v záznamu; nusl = PURL",
          "type": "array",
@@ -615,7 +578,7 @@
           }
         },
       "required": [
-        "titles",
+        "title",
         "creators",
         "resourceType"
       ]

@@ -1,6 +1,40 @@
 ** výsledkem by měl být: základ pro dokumenty, specifické pro vškp, vyjimková pravidla pro harvest **
 
 
+TO DO
+
+* změna titlů - Míra
+* recordIdentifiers přejmenovat na systemIdentifiers - Míra
+* zavedení pole i18nstr - Alžběta
+* změna u vškp modelu - studyfield - zrušit taxonomii - Petra
+* multilingual migrace - jak? - Hanka a Petra
+
+
+
+
+Title - nemá jazyk, v jazyce práce.
+nutná úprava náhledů výsledků, kdy se zobrazí přeložený název v jazyce rozhraní, pokud existuje.
+v nápovědě pak promyslet zápis vícejazyčních dokumentů
+řadíme podle jazyka rozhraní mainTitle
+
+i18nstr se bude čistě používat pro subject, jinak se nad ním bude stavět multilingual 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 dotazy call
 * authority
   * organization - comment Alžběty, co myslela?
