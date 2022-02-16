@@ -78,7 +78,7 @@ Beze změn:
   * itemResourceType - typ dokumentu, taxonomie resourceType  
 
 
-* POVINNOSTI :
+POVINNOSTI :
   Povinnosti byly nastaveny minimalisticky tak, aby se nevalidní záznamy nemusely ukládat a stačil pouze report/log o chybách.
   Pak jsou údaje, které by měly být povinné, ale není důvod kvůli nim zahazovat záznam. Tzn. pro všechny zdroje by měly být jako základ ve validacích. A to jsou:
 - dateIssued, (kvůli datumům jako 199?)
