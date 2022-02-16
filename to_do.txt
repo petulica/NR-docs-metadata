@@ -22,7 +22,7 @@ nutné opravy v NUŠL (IDR):
 * osoby - NUŠL + IDR
   * chybí personal vs Organizational. hromadné úpravy pro ručně vkládané
   * IDR doplnit afiliaci
-* relatedItem - doplnit rok, vztah a typ dokumentu
+* relatedItem - doplnit rok, vztah, typ dokumentu a zvážit parsování/rozporcování zápisu rok, vol., issue, pages
     * IDR
     * NUŠL - ČSÚ, ČNB
 * identifiktáry před migrací, aby tam nebylo v datech "ISBN 978-..."
