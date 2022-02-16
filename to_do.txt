@@ -1,0 +1,29 @@
+
+TO DO
+MÍRA:
+* změna titlů a
+* zrušení povinnosti na location in events
+* recordIdentifiers přejmenovat na systemIdentifiers
+* rights array
+* v modelu VŠKP ref. na common model, ale ten se ted jmenuje document.
+
+Alžběta
+* zavedení pole i18nstr
+
+
+TO DO/discuss/decide:
+* accessibility vs. externalLocationNote - nepokrylo by první potřeby toho druhého?
+* titles - jak řešit zápis/migraci bilingvních věcí
+* subjectCategories - pro ruční vkládání nových objektů jako povinné?
+* při úpravě návrhu výsledků vyhledávání myslet na změny v title - nutná úprava náhledů výsledků, kdy se zobrazí přeložený název v jazyce rozhraní, pokud existuje.
+
+
+nutné opravy v NUŠL (IDR):
+* osoby - NUŠL + IDR
+  * chybí personal vs Organizational. hromadné úpravy pro ručně vkládané
+  * IDR doplnit afiliaci
+* relatedItem - doplnit rok, vztah a typ dokumentu
+    * IDR
+    * NUŠL - ČSÚ, ČNB
+* identifiktáry před migrací, aby tam nebylo v datech "ISBN 978-..."
+* bylo by dobré opravit i location, dokud se to dá pěkně zjistit, kde to je

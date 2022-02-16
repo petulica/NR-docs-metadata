@@ -157,10 +157,11 @@
       "additionalProperties": false,
       "properties": {
         "Title": {
+          "description": "Main (original) title of the object/work.",
           "type": "string"
         },
         "additionalTitles": {
-          "description": "Titles of the object/work.",
+          "description": "Additional titles of the object/work such as subtitle, translatedTitle and alternativeTitle.",
           "type": "array",
           "items": {
             "type": "object",
@@ -184,12 +185,9 @@
               "titleType"
             ]
           },
-          "minItems": 1,
-          "uniqueItems": true,
-          "$requirments": "dataPilot  - MARSHMALLOW required mainTitle, pro vkládání nevidím problém, pro harvest se vždy nastavil main. ZÁVĚR P: nerušit"
+          "uniqueItems": true
         },
         "creators": {
-          "$comment": "vrátit se k required v definicích.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/authority"
@@ -198,38 +196,36 @@
           "uniqueItems": true
         },
         "contributors": {
-                "type": "array",
-                "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/definitions/authority"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "role": {
-                          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
-                        }
-                      }
-                    }
-                  ]
-                },
-                "uniqueItems": true
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/authority"
               },
+              {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
+                  }
+                }
+              }
+            ]
+          },
+          "uniqueItems": true
+        },
         "resourceType": {
           "description": "Taxonomy driven typology of objects that's possible to store in the repository",
           "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
         },
         "dateIssued": {
           "description": "The date the resource is originaly published by publisher, in case of grey literature made publicly available by the institution.",
-          "$comment": "týká se dokumentu, nikoliv metadat!!!",
-          "$comment1": "jiné než dateAvailable pro data, vždy se vyplní ručně. v datacite ve formě YYYY odpovídá PublicationYear.",
+          "$comment": "týká se dokumentu, nikoliv metadat!!! jiné než dateAvailable. vždy se vyplní ručně.",
           "$ref": "#/definitions/date"
         },
         "dateAvailable": {
           "description": "The date the resource is publicly available in a repository.",
-          "$comment": "týká se dokumentu, nikoliv metadat!!!",
-          "$comment1": "stejně jako dateAvailable pro data, budou se přes něj řídit přístupy - embargo",
+          "$comment": "týká se dokumentu, nikoliv metadat!!! Stejně jako pro data, budou se přes něj řídit přístupy - embargo",
           "$ref": "#/definitions/date"
         },
         "dateModified": {
@@ -283,7 +279,6 @@
           "uniqueItems": true
         },
         "abstract": {
-          "$oai" : "povinnost v marshmallow neplatí pro harvest",
           "description": "Multilingual abstract description for record (may contain HTML).",
           "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
@@ -296,9 +291,11 @@
           "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
         "rights": {
-          "$comment": "POLE array",
           "description": "Any license or copyright information for this resource. Taxonomy field.",
-          "$ref": "../taxonomy-v2.0.0.json#/definitions/Term",
+          "type": "array",
+          "items": {
+            "$ref": "../taxonomy-v2.0.0.json#/definitions/Term"
+          },
           "uniqueItems": true
         },
         "accessRights": {
@@ -392,7 +389,7 @@
         },
         "fundingReferences": {
           "description": "informace o přidruženém projektu",
-          "$comment": "MIGRACE NUŠL - tohle by bylo dobré, protože v datech NUŠL hrozný stav v polích pro poskytovatele. u českých projektů na základě prvních dvou znaků v řetězci s identifikátorem projektu lze přiřadit poskytovatele.",
+          "$comment": "MIGRACE NUŠL - protože v datech NUŠL hrozný stav v polích pro poskytovatele. u českých projektů na základě prvních dvou znaků v řetězci s identifikátorem projektu lze přiřadit poskytovatele.",
           "type": "array",
           "items": {
             "type": "object",
@@ -454,8 +451,7 @@
           "uniqueItems": true
         },
         "accessibility": {
-          "$comment":"textové vyjádření dostupnosti souborů, primárně pro harvestované zdroje. ve vkládacím formuláři by bylo pouze pro restricted access",
-          "$oai": "nastavuje se pro každý zdroj zvlášť během konverze podle dostupnosti souborů ve zdrojovém systému",
+          "$comment":"textové vyjádření dostupnosti souborů, primárně pro harvestované zdroje. nastavuje se pro každý zdroj zvlášť během konverze podle dostupnosti souborů ve zdrojovém systému. ve vkládacím formuláři by bylo pouze pro restricted access",
           "$ref": "../multilingual-v2.0.0.json#/definitions/multilingual"
         },
         "series": {
@@ -498,13 +494,10 @@
         },
         "extent": {
           "description": "Extent of the work. If it is not paged, then it takes over number of pages of the entire pdf.",
-          "$comment": "stejná struktura jako Size od DataCite. V NUŠL tyto hodnoty jsou. Jedná se orientační info. Do budoucna můžeme řešit automatické generování.",
-            "type": "string"
+          "type": "string"
         },
         "persistentIdentifiers": {
           "description": "Persistent identifier/s of object as ISBN, DOI, etc. + assigned by National Repository. Status needed for DOI requests.",
-          "type": "array",
-          "$comment": "Alzp: shouldn't be property status set as optional, since is used only in DOI request use case?",
           "items": {
                 "$ref": "#/definitions/objectPIDs"
             },
@@ -512,13 +505,13 @@
         },
         "originalRecord": {
           "description": "odkaz na původní záznam",
-          "$oai": "zobrazovat koncovému uživateli v detailu záznamu jako původní místo uložení. objevuje se jen u harvestu",
+          "$comment": "zobrazovat koncovému uživateli v detailu záznamu jako původní místo uložení. objevuje se jen u harvestu",
           "type": "string",
           "format": "URL"
         },
        "systemIdentifiers": {
          "description": "systémové identifikátory a trvalé adresy pořízené skrze OAI, případně importy/migrace",
-         "$comment_RFC" : "možná bude sekce OAI fungovat jinak,takže by bylo potřeba to upravit. Ale tohle jsou za mě údaje, které by se měli ukládat přímo v záznamu; nusl = PURL",
+         "$comment" : "možná bude sekce OAI fungovat jinak,takže možná bude potřeba to upravit. Ale tohle jsou údaje, které by se měli ukládat přímo v záznamu; nusl = PURL",
          "type": "array",
          "items": {
            "type": "object",
@@ -571,8 +564,7 @@
               },
               "required": [
                 "eventNameOriginal",
-                "eventDate",
-                "eventLocation"
+                "eventDate"
               ]
             }
           }
